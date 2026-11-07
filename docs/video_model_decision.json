@@ -1,0 +1,64 @@
+{
+  "pricing_checked": "2026-11-07",
+  "cost_basis": "Current published rate times recorded video_output_duration_seconds; estimated, not verified invoice charge; excludes taxes, credits, failed Seedance and retries.",
+  "timing_basis": "Replicate metrics.total_time, excludes local upload/download and polling delay. One sample per model.",
+  "quality_basis": "User ordinal ranking, not a cardinal quality score. Kling runs used 1080p; other runs used 768P.",
+  "models": [
+    {
+      "model": "kwaivgi/kling-v4.0",
+      "quality_rank": 1,
+      "usd_per_output_second": 0.235,
+      "billing_metric_seconds": 6.042,
+      "estimated_usd": 1.41987,
+      "generation_seconds": 198.502056978,
+      "pricing_source": "https://replicate.com/kwaivgi/kling-v4.0#pricing",
+      "resolution": "1080p"
+    },
+    {
+      "model": "minimax/h3-lite",
+      "quality_rank": 2,
+      "usd_per_output_second": 0.02,
+      "billing_metric_seconds": 6,
+      "estimated_usd": 0.12,
+      "generation_seconds": 31.19096603,
+      "pricing_source": "https://replicate.com/minimax/h3-lite#pricing",
+      "resolution": "768P"
+    },
+    {
+      "model": "minimax/h3-highspeed",
+      "quality_rank": 3,
+      "usd_per_output_second": 0.03,
+      "billing_metric_seconds": 6,
+      "estimated_usd": 0.18,
+      "generation_seconds": 21.48026737,
+      "pricing_source": "https://replicate.com/minimax/h3-highspeed#pricing",
+      "resolution": "768P"
+    },
+    {
+      "model": "prunaai/p-video-2-pro",
+      "quality_rank": 4,
+      "usd_per_output_second": 0.075,
+      "billing_metric_seconds": 6,
+      "estimated_usd": 0.45,
+      "generation_seconds": 12.963187152,
+      "pricing_source": "https://replicate.com/prunaai/p-video-2-pro#pricing",
+      "resolution": "768p"
+    },
+    {
+      "model": "kwaivgi/kling-v3-video",
+      "quality_rank": 5,
+      "usd_per_output_second": 0.336,
+      "billing_metric_seconds": 6,
+      "estimated_usd": 2.016,
+      "generation_seconds": 319.208748929,
+      "pricing_source": "https://replicate.com/kwaivgi/kling-v3-video#pricing",
+      "resolution": "pro"
+    }
+  ],
+  "recommendation": {
+    "default": "minimax/h3-lite",
+    "premium": "kwaivgi/kling-v4.0",
+    "latency_priority": "prunaai/p-video-2-pro"
+  },
+  "minimax_promotion": "Published prices include 50% off through 2026-12-31; do not apply a second discount."
+}

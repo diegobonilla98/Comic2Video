@@ -1,0 +1,284 @@
+{
+  "model": "prunaai/p-video-2-pro",
+  "version": "7fc65104affa38f28b544b3549506e52f6519d752f528944f4eae2f94cd384b6",
+  "schema": {
+    "info": {
+      "title": "Cog",
+      "version": "0.1.0"
+    },
+    "paths": {},
+    "openapi": "3.0.2",
+    "components": {
+      "schemas": {
+        "mode": {
+          "enum": [
+            "quality",
+            "speed",
+            "cost"
+          ],
+          "type": "string",
+          "title": "mode",
+          "description": "An enumeration."
+        },
+        "Input": {
+          "type": "object",
+          "title": "Input",
+          "required": [
+            "prompt"
+          ],
+          "properties": {
+            "mode": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/mode"
+                }
+              ],
+              "default": "speed",
+              "x-order": 1,
+              "description": "Generation mode: quality, speed, or cost."
+            },
+            "seed": {
+              "type": "integer",
+              "title": "Seed",
+              "x-order": 8,
+              "nullable": true,
+              "description": "Random seed for reproducible generation."
+            },
+            "image": {
+              "type": "string",
+              "title": "Image",
+              "format": "uri",
+              "x-order": 3,
+              "nullable": true,
+              "description": "First-frame reference image."
+            },
+            "prompt": {
+              "type": "string",
+              "title": "Prompt",
+              "x-order": 0,
+              "description": "Text prompt for video generation."
+            },
+            "duration": {
+              "type": "integer",
+              "title": "Duration",
+              "default": 5,
+              "maximum": 15,
+              "minimum": 5,
+              "x-order": 5,
+              "description": "Video duration in seconds."
+            },
+            "resolution": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/resolution"
+                }
+              ],
+              "default": "768p",
+              "x-order": 6,
+              "description": "Video resolution. 1080p, 2k and 4k generate at 768p and upscale it (24 fps kept)."
+            },
+            "aspect_ratio": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/aspect_ratio"
+                }
+              ],
+              "default": "16:9",
+              "x-order": 7,
+              "description": "Aspect ratio; reference images determine the canvas when provided."
+            },
+            "last_frame_image": {
+              "type": "string",
+              "title": "Last Frame Image",
+              "format": "uri",
+              "x-order": 4,
+              "nullable": true,
+              "description": "Last-frame reference image."
+            },
+            "prompt_upsampler": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/prompt_upsampler"
+                }
+              ],
+              "default": "turbo",
+              "x-order": 2,
+              "description": "Expand your prompt before video generation."
+            },
+            "enable_safety_filter": {
+              "type": "boolean",
+              "title": "Enable Safety Filter",
+              "default": false,
+              "x-order": 9,
+              "description": "Check the inputs against the content policy. When off, only the always-on categories (sexual content involving minors, self-harm intent or instructions) are still blocked."
+            }
+          }
+        },
+        "Output": {
+          "type": "string",
+          "title": "Output",
+          "format": "uri"
+        },
+        "Status": {
+          "enum": [
+            "starting",
+            "processing",
+            "succeeded",
+            "canceled",
+            "failed"
+          ],
+          "type": "string",
+          "title": "Status",
+          "description": "An enumeration."
+        },
+        "resolution": {
+          "enum": [
+            "480p",
+            "768p",
+            "1080p",
+            "2k",
+            "4k"
+          ],
+          "type": "string",
+          "title": "resolution",
+          "description": "An enumeration."
+        },
+        "aspect_ratio": {
+          "enum": [
+            "16:9",
+            "9:16",
+            "4:3",
+            "3:4",
+            "3:2",
+            "2:3",
+            "1:1"
+          ],
+          "type": "string",
+          "title": "aspect_ratio",
+          "description": "An enumeration."
+        },
+        "ValidationError": {
+          "type": "object",
+          "title": "ValidationError",
+          "required": [
+            "loc",
+            "msg",
+            "type"
+          ],
+          "properties": {
+            "loc": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              },
+              "title": "Location"
+            },
+            "msg": {
+              "type": "string",
+              "title": "Message"
+            },
+            "type": {
+              "type": "string",
+              "title": "Error Type"
+            }
+          }
+        },
+        "prompt_upsampler": {
+          "enum": [
+            "off",
+            "turbo",
+            "max"
+          ],
+          "type": "string",
+          "title": "prompt_upsampler",
+          "description": "An enumeration."
+        },
+        "PredictionRequest": {
+          "type": "object",
+          "title": "PredictionRequest",
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id"
+            },
+            "input": {
+              "$ref": "#/components/schemas/Input"
+            }
+          }
+        },
+        "PredictionResponse": {
+          "type": "object",
+          "title": "PredictionResponse",
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id"
+            },
+            "logs": {
+              "type": "string",
+              "title": "Logs"
+            },
+            "error": {
+              "type": "string",
+              "title": "Error"
+            },
+            "input": {
+              "$ref": "#/components/schemas/Input"
+            },
+            "output": {
+              "$ref": "#/components/schemas/Output"
+            },
+            "status": {
+              "type": "string",
+              "title": "Status"
+            },
+            "metrics": {
+              "type": "object",
+              "title": "Metrics"
+            },
+            "version": {
+              "type": "string",
+              "title": "Version"
+            },
+            "created_at": {
+              "type": "string",
+              "title": "Created At",
+              "format": "date-time"
+            },
+            "started_at": {
+              "type": "string",
+              "title": "Started At",
+              "format": "date-time"
+            },
+            "completed_at": {
+              "type": "string",
+              "title": "Completed At",
+              "format": "date-time"
+            }
+          }
+        },
+        "HTTPValidationError": {
+          "type": "object",
+          "title": "HTTPValidationError",
+          "properties": {
+            "detail": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ValidationError"
+              },
+              "title": "Detail"
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "Pruna's highest-quality video model. Generate video from text or images with speed and quality modes, first- and last-frame control, and durations up to 15 seconds."
+}

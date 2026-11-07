@@ -1,0 +1,300 @@
+{
+  "model": "openai/gpt-5.6-terra",
+  "version": "7edfb1b2268f1e5afb1e25902bf2df351f3e8e726dda36b625dc7e4e48d59b07",
+  "schema": {
+    "info": {
+      "title": "Cog",
+      "version": "0.1.0"
+    },
+    "paths": {},
+    "openapi": "3.0.2",
+    "components": {
+      "schemas": {
+        "Input": {
+          "type": "object",
+          "title": "Input",
+          "properties": {
+            "prompt": {
+              "type": "string",
+              "title": "Prompt",
+              "x-order": 0,
+              "nullable": true,
+              "description": "The prompt to send to the model. Do not use if using messages."
+            },
+            "messages": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              },
+              "title": "Messages",
+              "default": [],
+              "x-order": 2,
+              "description": "A JSON string representing a list of messages. For example: [{\"role\": \"user\", \"content\": \"Hello, how are you?\"}]. If provided, prompt and system_prompt are ignored."
+            },
+            "verbosity": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/verbosity"
+                }
+              ],
+              "default": "medium",
+              "x-order": 5,
+              "description": "Constrains the verbosity of the model's response. Lower values will result in more concise responses, while higher values will result in more verbose responses. Currently supported values are low, medium, and high. GPT-5 supports this parameter to help control whether answers are short and to the point or long and comprehensive."
+            },
+            "image_input": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "title": "Image Input",
+              "default": [],
+              "x-order": 3,
+              "description": "List of images to send to the model"
+            },
+            "system_prompt": {
+              "type": "string",
+              "title": "System Prompt",
+              "x-order": 1,
+              "nullable": true,
+              "description": "System prompt to set the assistant's behavior"
+            },
+            "reasoning_effort": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/reasoning_effort"
+                }
+              ],
+              "default": "none",
+              "x-order": 4,
+              "description": "Constrains effort on reasoning. Supported values are none, low, medium, high, and xhigh. The default none provides fast, low-latency responses. Higher reasoning efforts produce more thorough answers but use more tokens and take longer. For higher reasoning efforts you may need to increase your max_completion_tokens to avoid empty responses (where all the tokens are used on reasoning)."
+            },
+            "max_completion_tokens": {
+              "type": "integer",
+              "title": "Max Completion Tokens",
+              "x-order": 6,
+              "nullable": true,
+              "description": "Maximum number of completion tokens to generate. For higher reasoning efforts you may need to increase your max_completion_tokens to avoid empty responses (where all the tokens are used on reasoning)."
+            }
+          }
+        },
+        "Output": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Output",
+          "x-cog-array-type": "iterator",
+          "x-cog-array-display": "concatenate"
+        },
+        "Status": {
+          "enum": [
+            "starting",
+            "processing",
+            "succeeded",
+            "canceled",
+            "failed"
+          ],
+          "type": "string",
+          "title": "Status",
+          "description": "An enumeration."
+        },
+        "verbosity": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "type": "string",
+          "title": "verbosity",
+          "description": "An enumeration."
+        },
+        "WebhookEvent": {
+          "enum": [
+            "start",
+            "output",
+            "logs",
+            "completed"
+          ],
+          "type": "string",
+          "title": "WebhookEvent",
+          "description": "An enumeration."
+        },
+        "ValidationError": {
+          "type": "object",
+          "title": "ValidationError",
+          "required": [
+            "loc",
+            "msg",
+            "type"
+          ],
+          "properties": {
+            "loc": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              },
+              "title": "Location"
+            },
+            "msg": {
+              "type": "string",
+              "title": "Message"
+            },
+            "type": {
+              "type": "string",
+              "title": "Error Type"
+            }
+          }
+        },
+        "reasoning_effort": {
+          "enum": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ],
+          "type": "string",
+          "title": "reasoning_effort",
+          "description": "An enumeration."
+        },
+        "PredictionRequest": {
+          "type": "object",
+          "title": "PredictionRequest",
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id",
+              "nullable": true
+            },
+            "input": {
+              "$ref": "#/components/schemas/Input",
+              "nullable": true
+            },
+            "context": {
+              "type": "object",
+              "title": "Context",
+              "nullable": true,
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "webhook": {
+              "type": "string",
+              "title": "Webhook",
+              "format": "uri",
+              "nullable": true,
+              "maxLength": 65536,
+              "minLength": 1
+            },
+            "created_at": {
+              "type": "string",
+              "title": "Created At",
+              "format": "date-time",
+              "nullable": true
+            },
+            "output_file_prefix": {
+              "type": "string",
+              "title": "Output File Prefix",
+              "nullable": true
+            },
+            "webhook_events_filter": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/WebhookEvent"
+              },
+              "default": [
+                "start",
+                "output",
+                "logs",
+                "completed"
+              ],
+              "nullable": true
+            }
+          }
+        },
+        "PredictionResponse": {
+          "type": "object",
+          "title": "PredictionResponse",
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id",
+              "nullable": true
+            },
+            "logs": {
+              "type": "string",
+              "title": "Logs",
+              "default": ""
+            },
+            "error": {
+              "type": "string",
+              "title": "Error",
+              "nullable": true
+            },
+            "input": {
+              "$ref": "#/components/schemas/Input",
+              "nullable": true
+            },
+            "output": {
+              "$ref": "#/components/schemas/Output"
+            },
+            "status": {
+              "$ref": "#/components/schemas/Status",
+              "nullable": true
+            },
+            "metrics": {
+              "type": "object",
+              "title": "Metrics",
+              "nullable": true,
+              "additionalProperties": true
+            },
+            "version": {
+              "type": "string",
+              "title": "Version",
+              "nullable": true
+            },
+            "created_at": {
+              "type": "string",
+              "title": "Created At",
+              "format": "date-time",
+              "nullable": true
+            },
+            "started_at": {
+              "type": "string",
+              "title": "Started At",
+              "format": "date-time",
+              "nullable": true
+            },
+            "completed_at": {
+              "type": "string",
+              "title": "Completed At",
+              "format": "date-time",
+              "nullable": true
+            }
+          }
+        },
+        "HTTPValidationError": {
+          "type": "object",
+          "title": "HTTPValidationError",
+          "properties": {
+            "detail": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ValidationError"
+              },
+              "title": "Detail"
+            }
+          }
+        }
+      }
+    }
+  }
+}

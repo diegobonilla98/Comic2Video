@@ -1,0 +1,5 @@
+ultralytics==8.4.43
+transformers==4.49.0
+huggingface-hub==0.36.0
+tokenizers==0.21.4
+pytorch-metric-learning==2.9.0

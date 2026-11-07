@@ -1,0 +1,44 @@
+{
+  "run_id": "test_data_1_20261107_v1",
+  "phase": "assemble",
+  "input_dir": "test_data/1",
+  "artifact_dir": "artifacts/end_to_end/test_data_1_20261107_v1",
+  "authorized_models": [
+    "openai/gpt-5.6-terra",
+    "black-forest-labs/flux-2-dev",
+    "minimax/h3-lite",
+    "kwaivgi/kling-v3-video",
+    "bytedance/seedance-2.5",
+    "prunaai/p-video-2-pro",
+    "kwaivgi/kling-v4.0",
+    "minimax/h3-highspeed"
+  ],
+  "max_new_predictions": 200,
+  "concurrency": 4,
+  "video_recovery": {
+    "eligible_failures": [
+      "provider_content_block",
+      "timeout",
+      "rate_limit",
+      "service_error"
+    ],
+    "fallback_models": [
+      "kwaivgi/kling-v3-video",
+      "bytedance/seedance-2.5",
+      "kwaivgi/kling-v4.0",
+      "prunaai/p-video-2-pro",
+      "minimax/h3-highspeed"
+    ],
+    "max_attempts_per_model": 1,
+    "max_attempts_per_shot": 5,
+    "safety_filters": "provider defaults; never disable"
+  },
+  "prediction_timeout_seconds": 1800,
+  "target_aspect_ratio": "16:9",
+  "target_resolution": [
+    1280,
+    720
+  ],
+  "understanding_completion_tokens": 10000,
+  "magi_run": "artifacts/model_benchmark/magiv3/88dc4bb6fd43793d/run.json"
+}

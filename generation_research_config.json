@@ -1,0 +1,25 @@
+{
+  "provider": "replicate",
+  "cleaning_model": "black-forest-labs/flux-2-dev",
+  "cleaning_prompt_file": "vignette_cleaning_prompt.txt",
+  "cleaning_settings": {
+    "go_fast": true,
+    "output_format": "png",
+    "output_quality": 100
+  },
+  "video_model": "minimax/h3-lite",
+  "video_candidates": [
+    "minimax/h3-lite",
+    "minimax/h3-highspeed",
+    "prunaai/p-video-2-pro",
+    "kwaivgi/kling-v3-video",
+    "kwaivgi/kling-v4.0",
+    "bytedance/seedance-2.5"
+  ],
+  "allow_generation": false,
+  "llm_model": "openai/gpt-5.6-terra",
+  "video_settings": {
+    "resolution": "768P",
+    "duration": 6
+  }
+}

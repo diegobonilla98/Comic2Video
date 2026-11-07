@@ -1,0 +1,46 @@
+{
+  "provider": "replicate",
+  "input_dir": "test_data",
+  "artifact_dir": "artifacts",
+  "reading_convention": "ltr",
+  "target_aspect_ratio": "16:9",
+  "target_resolution": [
+    1280,
+    720
+  ],
+  "layout_model": "openai/gpt-5.6-terra",
+  "video_model": "minimax/h3-lite",
+  "layout_settings": {
+    "verbosity": "low",
+    "reasoning_effort": "low",
+    "max_completion_tokens": 4096
+  },
+  "allow_model_execution": false,
+  "max_new_predictions": 0,
+  "prediction_timeout_seconds": 300,
+  "poll_seconds": 2,
+  "minimum_panel_area_fraction": 0.025,
+  "white_threshold": 235,
+  "development_pages": [
+    "1/5.png",
+    "1/6.png",
+    "2/0.webp",
+    "2/2.webp"
+  ],
+  "llm_model": "openai/gpt-5.6-terra",
+  "llm_settings": {
+    "verbosity": "low",
+    "reasoning_effort": "low"
+  },
+  "prompt_completion_limits": {
+    "layout": 4096,
+    "script": 4096,
+    "cleanup": 1024,
+    "director": 2048,
+    "repair": 2048
+  },
+  "video_settings": {
+    "resolution": "768P",
+    "duration": 6
+  }
+}

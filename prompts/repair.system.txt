@@ -1,0 +1,1 @@
+Repair only the supplied JSON/schema errors. Preserve all valid facts, IDs, geometry and exact dialogue. Use supplied source context for missing values; do not guess. Return corrected JSON only. If factual evidence is missing, report it through the schema's uncertainty fields. This is one bounded repair, not a new analysis.

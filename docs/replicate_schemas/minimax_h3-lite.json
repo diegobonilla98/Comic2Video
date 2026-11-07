@@ -1,0 +1,278 @@
+{
+  "model": "minimax/h3-lite",
+  "version": "a9968d26d2043f0bd2a55e3cbe7caaa7e02976a3881a22e56343f663403a1816",
+  "schema": {
+    "info": {
+      "title": "Cog",
+      "version": "0.23.1"
+    },
+    "paths": {},
+    "openapi": "3.0.2",
+    "components": {
+      "schemas": {
+        "Input": {
+          "type": "object",
+          "title": "Input",
+          "required": [
+            "prompt"
+          ],
+          "properties": {
+            "ratio": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/ratio"
+                }
+              ],
+              "default": "16:9",
+              "x-order": 8,
+              "description": "Output aspect ratio. Ignored for image-to-video, which uses the aspect ratio of the input image."
+            },
+            "prompt": {
+              "type": "string",
+              "title": "Prompt",
+              "x-order": 0,
+              "description": "Text prompt for generation"
+            },
+            "duration": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/duration"
+                }
+              ],
+              "default": 5,
+              "x-order": 6,
+              "description": "Output duration in seconds."
+            },
+            "resolution": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/resolution"
+                }
+              ],
+              "default": "768P",
+              "x-order": 7,
+              "description": "Output resolution."
+            },
+            "last_frame_image": {
+              "type": "string",
+              "title": "Last Frame Image",
+              "format": "uri",
+              "default": null,
+              "x-order": 2,
+              "nullable": true,
+              "description": "Last frame image for video generation. The final frame of the output video will match this image."
+            },
+            "first_frame_image": {
+              "type": "string",
+              "title": "First Frame Image",
+              "format": "uri",
+              "default": null,
+              "x-order": 1,
+              "nullable": true,
+              "description": "First frame image for video generation. The output video will have the same aspect ratio as this image."
+            },
+            "reference_audio_urls": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "title": "Reference Audio Urls",
+              "default": [],
+              "x-order": 5,
+              "description": "Public URLs for up to 3 reference audio clips."
+            },
+            "reference_image_urls": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "title": "Reference Image Urls",
+              "default": [],
+              "x-order": 3,
+              "description": "Public URLs for up to 9 reference images."
+            },
+            "reference_video_urls": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "title": "Reference Video Urls",
+              "default": [],
+              "x-order": 4,
+              "description": "Public URLs for up to 3 reference videos, 15 seconds total. Reference video seconds are billed at the same rate as output seconds."
+            }
+          }
+        },
+        "ratio": {
+          "enum": [
+            "21:9",
+            "16:9",
+            "4:3",
+            "1:1",
+            "3:4",
+            "9:16"
+          ],
+          "type": "string",
+          "title": "ratio",
+          "description": "An enumeration."
+        },
+        "Output": {
+          "type": "string",
+          "title": "Output",
+          "format": "uri"
+        },
+        "Status": {
+          "enum": [
+            "starting",
+            "processing",
+            "succeeded",
+            "canceled",
+            "failed"
+          ],
+          "type": "string",
+          "title": "Status",
+          "description": "An enumeration."
+        },
+        "duration": {
+          "enum": [
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "type": "integer",
+          "title": "duration",
+          "description": "An enumeration."
+        },
+        "resolution": {
+          "enum": [
+            "480P",
+            "768P"
+          ],
+          "type": "string",
+          "title": "resolution",
+          "description": "An enumeration."
+        },
+        "ValidationError": {
+          "type": "object",
+          "title": "ValidationError",
+          "required": [
+            "loc",
+            "msg",
+            "type"
+          ],
+          "properties": {
+            "loc": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              },
+              "title": "Location"
+            },
+            "msg": {
+              "type": "string",
+              "title": "Message"
+            },
+            "type": {
+              "type": "string",
+              "title": "Error Type"
+            }
+          }
+        },
+        "PredictionRequest": {
+          "type": "object",
+          "title": "PredictionRequest",
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id"
+            },
+            "input": {
+              "$ref": "#/components/schemas/Input"
+            }
+          }
+        },
+        "PredictionResponse": {
+          "type": "object",
+          "title": "PredictionResponse",
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id"
+            },
+            "logs": {
+              "type": "string",
+              "title": "Logs"
+            },
+            "error": {
+              "type": "string",
+              "title": "Error"
+            },
+            "input": {
+              "$ref": "#/components/schemas/Input"
+            },
+            "output": {
+              "$ref": "#/components/schemas/Output"
+            },
+            "status": {
+              "type": "string",
+              "title": "Status"
+            },
+            "metrics": {
+              "type": "object",
+              "title": "Metrics"
+            },
+            "version": {
+              "type": "string",
+              "title": "Version"
+            },
+            "created_at": {
+              "type": "string",
+              "title": "Created At",
+              "format": "date-time"
+            },
+            "started_at": {
+              "type": "string",
+              "title": "Started At",
+              "format": "date-time"
+            },
+            "completed_at": {
+              "type": "string",
+              "title": "Completed At",
+              "format": "date-time"
+            }
+          }
+        },
+        "HTTPValidationError": {
+          "type": "object",
+          "title": "HTTPValidationError",
+          "properties": {
+            "detail": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ValidationError"
+              },
+              "title": "Detail"
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "Generate videos with MiniMax H3 Lite, the lower-cost version of MiniMax H3. Supports text-to-video, first- and last-frame image-to-video, and reference-based video generation at 480P or 768P."
+}

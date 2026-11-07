@@ -1,0 +1,1 @@
+{duration}-second continuous comic animation. Preserve the input artwork's style, faces, costumes and setting. {conditioning} Camera: {camera}. Action: {action}. Keep: {invariants}. {dialogue} Audio: {sound}. No music, captions, speech bubbles, extra people or extra speech. Preserve the supplied ending composition when present; no scene change within this shot.

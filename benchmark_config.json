@@ -1,0 +1,19 @@
+{
+  "authorized_models": [
+    "mayocream/koharu-yolo26s",
+    "ragavsachdeva/magiv3"
+  ],
+  "device": "cuda:0",
+  "seed": 0,
+  "koharu_image_size": 1280,
+  "koharu_confidence": 0.25,
+  "koharu_retina_masks": true,
+  "magi_dtype": "float16",
+  "magi_interface": "predict_detections_and_associations",
+  "magi_generation": {
+    "num_beams": 3,
+    "max_new_tokens": 1024,
+    "do_sample": false
+  },
+  "model_cache_dir": "C:\\Users\\diego\\Documents\\Codex\\2026-11-06\\let\\work\\comic2video-models"
+}

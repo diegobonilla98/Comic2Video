@@ -1,0 +1,12 @@
+{
+  "model": "minimax/h3-lite",
+  "duration_seconds": [4, 15],
+  "resolutions": ["480P", "768P"],
+  "first_frame_key": "first_frame_image",
+  "last_frame_key": "last_frame_image",
+  "native_audio_observed": true,
+  "exact_dialogue_guaranteed": false,
+  "persistent_voice_ids": false,
+  "structured_shot_timing": false,
+  "notes": "Native audio tracks were observed in the authorized scene comparison. Dialogue timing and descriptive voices remain soft prompt guidance. This adapter uses frame conditioning, not mixed reference mode."
+}

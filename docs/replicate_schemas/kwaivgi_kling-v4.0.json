@@ -1,0 +1,268 @@
+{
+  "model": "kwaivgi/kling-v4.0",
+  "version": "a35865309ecd984e603e640b17001d5731d8ddeda8b1c16fb69fd1de7d8699d8",
+  "schema": {
+    "info": {
+      "title": "Cog",
+      "version": "0.23.1"
+    },
+    "paths": {},
+    "openapi": "3.0.2",
+    "components": {
+      "schemas": {
+        "Input": {
+          "type": "object",
+          "title": "Input",
+          "required": [
+            "prompt"
+          ],
+          "properties": {
+            "prompt": {
+              "type": "string",
+              "title": "Prompt",
+              "x-order": 0,
+              "description": "Text prompt describing the video. Refer to images as @image_1, @image_2, ... and videos as @video_1, @video_2, ... (see start_image and reference_images for numbering). Up to 26,000 English characters or 11,000 non-English characters."
+            },
+            "duration": {
+              "type": "integer",
+              "title": "Duration",
+              "default": 5,
+              "maximum": 30,
+              "minimum": 3,
+              "x-order": 9,
+              "description": "Video duration in seconds. Ignored when base_video is set."
+            },
+            "end_image": {
+              "type": "string",
+              "title": "End Image",
+              "format": "uri",
+              "default": null,
+              "x-order": 3,
+              "nullable": true,
+              "description": "Last frame of the video. Same format requirements as start_image."
+            },
+            "base_video": {
+              "type": "string",
+              "title": "Base Video",
+              "format": "uri",
+              "default": null,
+              "x-order": 6,
+              "nullable": true,
+              "description": "Video to edit (.mp4/.mov, 3-30 seconds, 700-4553px per side, max 300MB). Referred to as @video_1. When set, the output keeps the length and aspect ratio of this video."
+            },
+            "resolution": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/resolution"
+                }
+              ],
+              "default": "1080p",
+              "x-order": 7,
+              "description": "Output resolution."
+            },
+            "start_image": {
+              "type": "string",
+              "title": "Start Image",
+              "format": "uri",
+              "default": null,
+              "x-order": 1,
+              "nullable": true,
+              "description": "First frame of the video. Supports .jpg/.jpeg/.png, max 30MB, min 300px, aspect ratio between 2:5 and 5:2."
+            },
+            "aspect_ratio": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/aspect_ratio"
+                }
+              ],
+              "default": "16:9",
+              "x-order": 8,
+              "description": "Aspect ratio of the output video. Ignored when start_image, middle_images, end_image or base_video is set, since the aspect ratio then comes from the input."
+            },
+            "middle_images": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "title": "Middle Images",
+              "default": [],
+              "x-order": 2,
+              "description": "Keyframes between the first and last frame, in order. Same format requirements as start_image."
+            },
+            "reference_images": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "title": "Reference Images",
+              "default": [],
+              "x-order": 4,
+              "description": "Reference images for characters, objects, scenes or style. Images are numbered in this order: start_image, middle_images, end_image, reference_images. Up to 10 images in total across all image inputs."
+            },
+            "reference_videos": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uri"
+              },
+              "title": "Reference Videos",
+              "default": [],
+              "x-order": 5,
+              "description": "Reference videos to take motion, camera work or style from (.mp4/.mov, 3-30 seconds each, 700-4553px per side, max 300MB). Numbered after base_video."
+            }
+          }
+        },
+        "Output": {
+          "type": "string",
+          "title": "Output",
+          "format": "uri"
+        },
+        "Status": {
+          "enum": [
+            "starting",
+            "processing",
+            "succeeded",
+            "canceled",
+            "failed"
+          ],
+          "type": "string",
+          "title": "Status",
+          "description": "An enumeration."
+        },
+        "resolution": {
+          "enum": [
+            "720p",
+            "1080p"
+          ],
+          "type": "string",
+          "title": "resolution",
+          "description": "An enumeration."
+        },
+        "aspect_ratio": {
+          "enum": [
+            "16:9",
+            "9:16",
+            "1:1",
+            "21:9"
+          ],
+          "type": "string",
+          "title": "aspect_ratio",
+          "description": "An enumeration."
+        },
+        "ValidationError": {
+          "type": "object",
+          "title": "ValidationError",
+          "required": [
+            "loc",
+            "msg",
+            "type"
+          ],
+          "properties": {
+            "loc": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              },
+              "title": "Location"
+            },
+            "msg": {
+              "type": "string",
+              "title": "Message"
+            },
+            "type": {
+              "type": "string",
+              "title": "Error Type"
+            }
+          }
+        },
+        "PredictionRequest": {
+          "type": "object",
+          "title": "PredictionRequest",
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id"
+            },
+            "input": {
+              "$ref": "#/components/schemas/Input"
+            }
+          }
+        },
+        "PredictionResponse": {
+          "type": "object",
+          "title": "PredictionResponse",
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id"
+            },
+            "logs": {
+              "type": "string",
+              "title": "Logs"
+            },
+            "error": {
+              "type": "string",
+              "title": "Error"
+            },
+            "input": {
+              "$ref": "#/components/schemas/Input"
+            },
+            "output": {
+              "$ref": "#/components/schemas/Output"
+            },
+            "status": {
+              "type": "string",
+              "title": "Status"
+            },
+            "metrics": {
+              "type": "object",
+              "title": "Metrics"
+            },
+            "version": {
+              "type": "string",
+              "title": "Version"
+            },
+            "created_at": {
+              "type": "string",
+              "title": "Created At",
+              "format": "date-time"
+            },
+            "started_at": {
+              "type": "string",
+              "title": "Started At",
+              "format": "date-time"
+            },
+            "completed_at": {
+              "type": "string",
+              "title": "Completed At",
+              "format": "date-time"
+            }
+          }
+        },
+        "HTTPValidationError": {
+          "type": "object",
+          "title": "HTTPValidationError",
+          "properties": {
+            "detail": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ValidationError"
+              },
+              "title": "Detail"
+            }
+          }
+        }
+      }
+    }
+  },
+  "description": "Kling 4.0: generate 3 to 30 second videos at up to 1080p from text, keyframes, reference images, or reference videos, and edit existing videos"
+}
